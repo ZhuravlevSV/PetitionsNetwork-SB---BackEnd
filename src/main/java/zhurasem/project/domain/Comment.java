@@ -84,16 +84,24 @@ public class Comment implements Serializable {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(cid);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if(this == obj) return true;
+        if(obj == null) return false;
+        if(getClass() != obj.getClass()) return false;
+        Comment comment = (Comment) obj;
+        return cid.equals(comment.cid);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Comment{" +
+                "cid=" + cid +
+                ", text='" + text + '\'' +
+                ", dateFrom=" + dateFrom +
+                '}';
     }
 }

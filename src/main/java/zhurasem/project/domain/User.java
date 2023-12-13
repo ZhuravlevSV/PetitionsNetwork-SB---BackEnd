@@ -84,17 +84,25 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(username);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if(this == obj) return true;
+        if(obj == null) return false;
+        if(getClass() != obj.getClass()) return false;
+        User user = (User) obj;
+        return username.equals(user.username);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 
 }

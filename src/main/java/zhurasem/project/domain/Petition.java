@@ -120,16 +120,24 @@ public class Petition implements Serializable {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(pid);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if(this == obj) return true;
+        if(obj == null) return false;
+        if(getClass() != obj.getClass()) return false;
+        Petition petition = (Petition) obj;
+        return pid.equals(petition.pid);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "PetitionEntity{" +
+                "pid=" + pid +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                '}';
     }
 }
