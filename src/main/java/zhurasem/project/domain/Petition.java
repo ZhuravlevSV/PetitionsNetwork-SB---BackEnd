@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class Petition implements Serializable {
+public class Petition implements Serializable, DomainEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -127,6 +127,11 @@ public class Petition implements Serializable {
     }
 
     // Overrided methods:
+
+    @Override
+    public Long getId() {
+        return getPid();
+    }
 
     @Override
     public int hashCode() {

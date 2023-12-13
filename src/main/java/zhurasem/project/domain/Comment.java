@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class Comment implements Serializable {
+public class Comment implements Serializable, DomainEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,6 +89,11 @@ public class Comment implements Serializable {
     }
 
     // Overrided methods:
+
+    @Override
+    public Long getId() {
+        return getCid();
+    }
 
     @Override
     public int hashCode() {

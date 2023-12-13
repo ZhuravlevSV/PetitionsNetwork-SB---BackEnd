@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class User implements Serializable {
+public class User implements Serializable, DomainEntity<String> {
 
     @Id
     private String username;
@@ -90,6 +90,11 @@ public class User implements Serializable {
     }
 
     // Overrided methods:
+
+    @Override
+    public String getId() {
+        return getUsername();
+    }
 
     @Override
     public int hashCode() {
