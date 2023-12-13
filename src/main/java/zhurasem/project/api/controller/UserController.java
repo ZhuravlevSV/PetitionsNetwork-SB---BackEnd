@@ -66,6 +66,12 @@ public class UserController {
         return convertToDto(user);
     }
 
+    @DeleteMapping("/users/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    void delete(@PathVariable String id) {
+        userService.deleteById(id);
+    }
+
     // Convertors:
 
     private User convertToEntity(UserDto userDto) {
@@ -83,9 +89,5 @@ public class UserController {
                 .map(this::convertToDto)
                 .collect(toList());
     }
-
-
-
-
 
 }
