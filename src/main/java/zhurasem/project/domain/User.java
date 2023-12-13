@@ -40,6 +40,15 @@ public class User implements Serializable {
         this.password = Objects.requireNonNull(password);
     }
 
+    public User(String username, String email, String password, Collection<Petition> myPetitions, Collection<Comment> myComments, Collection<Petition> signedByMe) {
+        this.username = Objects.requireNonNull(username);
+        this.email = Objects.requireNonNull(email);
+        this.password = Objects.requireNonNull(password);
+        this.myPetitions = myPetitions;
+        this.myComments = myComments;
+        this.signedByMe = signedByMe;
+    }
+
     // Getters:
 
     public String getUsername() {

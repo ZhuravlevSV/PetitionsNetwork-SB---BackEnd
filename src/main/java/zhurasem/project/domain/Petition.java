@@ -52,6 +52,16 @@ public class Petition implements Serializable {
         this.dateFrom = Objects.requireNonNull(dateFrom);
     }
 
+    public Petition(Long pid, String title, String text, int goal, Date dateFrom, User authorPetition, Collection<Comment> comments) {
+        this.pid = Objects.requireNonNull(pid);
+        this.title = Objects.requireNonNull(title);
+        this.text = Objects.requireNonNull(text);
+        this.goal = goal;
+        this.dateFrom = Objects.requireNonNull(dateFrom);
+        this.authorPetition = authorPetition;
+        this.comments = comments;
+    }
+
     // Getters:
 
     public Long getPid() {
@@ -134,7 +144,7 @@ public class Petition implements Serializable {
 
     @Override
     public String toString() {
-        return "PetitionEntity{" +
+        return "Petition{" +
                 "pid=" + pid +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +

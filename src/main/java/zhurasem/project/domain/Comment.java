@@ -36,6 +36,14 @@ public class Comment implements Serializable {
         this.dateFrom = Objects.requireNonNull(dateFrom);
     }
 
+    public Comment(Long cid, String text, Date dateFrom, User authorComment, Petition petitionComment) {
+        this.cid = Objects.requireNonNull(cid);
+        this.text = Objects.requireNonNull(text);
+        this.dateFrom = Objects.requireNonNull(dateFrom);
+        this.authorComment = authorComment;
+        this.petitionComment = petitionComment;
+    }
+
     // Getters:
 
     public Long getCid() {
