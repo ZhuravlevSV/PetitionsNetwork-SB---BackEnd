@@ -1,9 +1,9 @@
 package zhurasem.project.api.dto;
 
 public class UserDto {
-    private String username;
-    private String email;
-    private String password;
+    public String username;
+    public String email;
+    public String password;
 
     public UserDto() {}
 

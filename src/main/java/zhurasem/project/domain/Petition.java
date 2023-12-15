@@ -62,6 +62,17 @@ public class Petition implements Serializable, DomainEntity<Long> {
         this.comments = comments;
     }
 
+    public Petition(Long pid, String title, String text, int goal, Date dateFrom, User authorPetition, Collection<Comment> comments, Collection<User> signedBy) {
+        this.pid = Objects.requireNonNull(pid);
+        this.title = Objects.requireNonNull(title);
+        this.text = Objects.requireNonNull(text);
+        this.goal = goal;
+        this.dateFrom = Objects.requireNonNull(dateFrom);
+        this.authorPetition = authorPetition;
+        this.comments = comments;
+        this.signedBy.addAll(signedBy);
+    }
+
     // Getters:
 
     public Long getPid() {

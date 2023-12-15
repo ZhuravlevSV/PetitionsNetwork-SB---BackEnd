@@ -1,8 +1,8 @@
 package zhurasem.project.api.dto;
 
 public class UpdateUserDto {
-    private String email;
-    private String password;
+    public String email;
+    public String password;
 
     public UpdateUserDto() {}
 
