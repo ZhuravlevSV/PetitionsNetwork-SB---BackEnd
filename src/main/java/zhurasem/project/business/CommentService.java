@@ -1,6 +1,7 @@
 package zhurasem.project.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import zhurasem.project.api.exceptions.EntityStateException;
 import zhurasem.project.dao.CommentJpaRepository;
@@ -17,6 +18,7 @@ public class CommentService extends AbstractCrudService<Comment, Long>{
     private final PetitionService petitionService;
 
     @Autowired
+    @Lazy
     public CommentService(CommentJpaRepository commentJpaRepository, UserService userService, PetitionService petitionService) {
         super(commentJpaRepository);
         this.userService = userService;
