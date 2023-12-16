@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 public class PetitionDto {
-    public Long pid;
+    public Long pid = 0L;
     public String title;
     public String text;
     public int goal;
     public Date dateFrom;
-    public String authorPetitionId;
+    public String authorPetitionId = "";
     public List<Long> commentsIds = new ArrayList<>();
     public List<String> signedUsersIds = new ArrayList<>();
 
@@ -23,6 +23,35 @@ public class PetitionDto {
         this.goal = goal;
         this.dateFrom = dateFrom;
         this.authorPetitionId = authorPetitionId;
+        this.commentsIds = commentsIds;
+        this.signedUsersIds = signedUsersIds;
+    }
+
+    public PetitionDto(Long pid, String title, String text, int goal, Date dateFrom, List<Long> commentsIds, List<String> signedUsersIds) {
+        this.pid = pid;
+        this.title = title;
+        this.text = text;
+        this.goal = goal;
+        this.dateFrom = dateFrom;
+        this.commentsIds = commentsIds;
+        this.signedUsersIds = signedUsersIds;
+    }
+
+    public PetitionDto(String title, String text, int goal, Date dateFrom, String authorPetitionId, List<Long> commentsIds, List<String> signedUsersIds) {
+        this.title = title;
+        this.text = text;
+        this.goal = goal;
+        this.dateFrom = dateFrom;
+        this.authorPetitionId = authorPetitionId;
+        this.commentsIds = commentsIds;
+        this.signedUsersIds = signedUsersIds;
+    }
+
+    public PetitionDto(String title, String text, int goal, Date dateFrom, List<Long> commentsIds, List<String> signedUsersIds) {
+        this.title = title;
+        this.text = text;
+        this.goal = goal;
+        this.dateFrom = dateFrom;
         this.commentsIds = commentsIds;
         this.signedUsersIds = signedUsersIds;
     }

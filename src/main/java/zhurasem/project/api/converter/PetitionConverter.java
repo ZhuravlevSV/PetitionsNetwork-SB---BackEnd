@@ -1,7 +1,11 @@
 package zhurasem.project.api.converter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import zhurasem.project.api.dto.PetitionDto;
+import zhurasem.project.api.exceptions.EntityStateException;
 import zhurasem.project.business.CommentService;
 import zhurasem.project.business.UserService;
 import zhurasem.project.domain.Comment;
@@ -19,26 +23,30 @@ public class PetitionConverter {
     private final UserService userService;
     private final CommentService commentService;
 
+    @Autowired
     public PetitionConverter(UserService userService, CommentService commentService) {
         this.userService = userService;
         this.commentService = commentService;
     }
 
-    public Petition toEntity(PetitionDto petitionDto) {
+    public Petition toEntity(PetitionDto petitionDto) throws EntityStateException {
 
         // author
         Optional<User> optAuthorPetition = userService.readById(petitionDto.getAuthorPetitionId());
-        User authorPetition = optAuthorPetition.orElseThrow();
+        User authorPetition = optAuthorPetition.orElseThrow(
+                () -> new EntityStateException());
 
         // comments
         Collection<Comment> comments = new ArrayList<>();
         for(Long commentId : petitionDto.getCommentsIds())
-            comments.add(commentService.readById(commentId).orElseThrow());
+            comments.add(commentService.readById(commentId).orElseThrow(
+                    () -> new EntityStateException()));
 
         // signedBy users
         Collection<User> signedBy = new ArrayList<>();
         for(String userId : petitionDto.getSignedUsersIds())
-            signedBy.add(userService.readById(userId).orElseThrow());
+            signedBy.add(userService.readById(userId).orElseThrow(
+                    () -> new EntityStateException()));
 
         return new Petition(
                 petitionDto.getPid(),
@@ -51,7 +59,7 @@ public class PetitionConverter {
                 signedBy);
     }
 
-    public List<Petition> toEntities(List<PetitionDto> petitionDtos) {
+    public List<Petition> toEntities(Iterable<PetitionDto> petitionDtos) {
         List<Petition> entitites = new ArrayList<>();
         for(PetitionDto petitionDto : petitionDtos)
             entitites.add(toEntity(petitionDto));
@@ -71,7 +79,7 @@ public class PetitionConverter {
         );
     }
 
-    public List<PetitionDto> toDtos(List<Petition> petitions) {
+    public List<PetitionDto> toDtos(Iterable<Petition> petitions) {
         List<PetitionDto> dtos = new ArrayList<>();
         for(Petition petition : petitions)
             dtos.add(toDto(petition));

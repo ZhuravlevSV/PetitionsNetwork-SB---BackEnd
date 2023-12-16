@@ -1,12 +1,13 @@
 package zhurasem.project.api.controller;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import zhurasem.project.api.converter.PetitionConverter;
 import zhurasem.project.api.dto.PetitionDto;
+import zhurasem.project.api.exceptions.EntityStateException;
 import zhurasem.project.business.PetitionService;
-import zhurasem.project.domain.Petition;
 
 import java.util.List;
 
@@ -14,11 +15,26 @@ import java.util.List;
 public class PetitionController {
 
     private final PetitionService petitionService;
-    private final ModelMapper modelMapper;
+    private final PetitionConverter petitionConverter;
 
     @Autowired
-    public PetitionController(PetitionService petitionService, ModelMapper modelMapper) {
+    public PetitionController(PetitionService petitionService, PetitionConverter petitionConverter) {
         this.petitionService = petitionService;
-        this.modelMapper = modelMapper;
+        this.petitionConverter = petitionConverter;
+    }
+
+    @GetMapping("/petitions")
+    List<PetitionDto> getAll() {
+        return petitionConverter.toDtos(petitionService.readAll());
+    }
+
+    @PostMapping("/petitions")
+    PetitionDto create(@RequestBody PetitionDto petitionDto) {
+        System.out.println(petitionDto.text);
+        try {
+            return petitionConverter.toDto(petitionService.create(petitionConverter.toEntity(petitionDto)));
+        } catch (EntityStateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Author ID, commentsIDs, signedByIds: not found");
+        }
     }
 }
