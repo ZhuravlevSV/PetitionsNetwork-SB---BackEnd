@@ -37,4 +37,33 @@ public class PetitionController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Author ID, commentsIDs, signedByIds: not found");
         }
     }
+
+    @PutMapping("/petitions/{id}")
+    PetitionDto update(@RequestBody PetitionDto petitionDto, @PathVariable Long id) {
+        var petition = petitionService.readById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Petition not found"));
+        try {
+            petition.setTitle(petitionDto.getTitle());
+            petition.setText(petitionDto.getText());
+            petition.setGoal(petitionDto.getGoal());
+            petition.setDateFrom(petitionDto.getDateFrom());
+            petitionService.update(petition);
+        } catch (EntityStateException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Petition ID is not found");
+        }
+        return petitionConverter.toDto(petition);
+    }
+
+    @GetMapping("/petitions/{id}")
+    PetitionDto get(@PathVariable Long id) {
+        return petitionConverter.toDto(petitionService.readById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Petition not found")));
+    }
+
+    @DeleteMapping("/petitions/{id}")
+    void delete(@PathVariable Long id) {
+        petitionService.readById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Petition not found"));
+        petitionService.deleteById(id);
+    }
 }
