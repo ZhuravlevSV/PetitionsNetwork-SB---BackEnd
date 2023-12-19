@@ -30,7 +30,7 @@ public class PetitionController {
 
     @PostMapping("/petitions")
     PetitionDto create(@RequestBody PetitionDto petitionDto) {
-        System.out.println(petitionDto.text);
+        // System.out.println(petitionDto.text);
         try {
             return petitionConverter.toDto(petitionService.create(petitionConverter.toEntity(petitionDto)));
         } catch (EntityStateException e) {

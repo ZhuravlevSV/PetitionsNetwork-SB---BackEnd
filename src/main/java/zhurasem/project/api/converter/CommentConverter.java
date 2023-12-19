@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class CommentConvertor {
+public class CommentConverter {
 
     private final UserService userService;
     private final PetitionService petitionService;
 
-    public CommentConvertor(UserService userService, PetitionService petitionService) {
+    public CommentConverter(UserService userService, PetitionService petitionService) {
         this.userService = userService;
         this.petitionService = petitionService;
     }
