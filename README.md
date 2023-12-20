@@ -80,6 +80,15 @@ The user also has the opportunity to comment on petitions.
       - int goal;
       - Date dateFrom;
 
+### Sign Petition
+- **POST** `/petititons/{id}/sign/{idAuthor}`
+    - PathVariable: Long pid;
+    - PathVariable: String idAuthor
+
+### Read all User Petitions
+- **GET** `/petititons/author/{idAuthor}`
+    - PathVariable: String idAuthor
+
 ### Delete Petition
 - **DELETE** `/petitions/{id}`
    - PathVariable: Long pid;
