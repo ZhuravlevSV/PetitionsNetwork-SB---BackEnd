@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class PetitionService extends AbstractCrudService<Petition, Long> {
 
+    private final PetitionJpaRepository petitionJpaRepository;
     private final UserService userService;
     private final CommentService commentService;
 
@@ -23,6 +24,7 @@ public class PetitionService extends AbstractCrudService<Petition, Long> {
     @Lazy
     public PetitionService(PetitionJpaRepository petitionJpaRepository, UserService userService, CommentService commentService) {
         super(petitionJpaRepository);
+        this.petitionJpaRepository = petitionJpaRepository;
         this.userService = userService;
         this.commentService = commentService;
     }
@@ -76,8 +78,8 @@ public class PetitionService extends AbstractCrudService<Petition, Long> {
         Optional<Petition> optPetition = readById(pid);
         Optional<User> optUser = userService.readById(username);
 
-        Petition petition = optPetition.orElseThrow();
-        User user = optUser.orElseThrow();
+        Petition petition = optPetition.orElseThrow(() -> new EntityStateException());
+        User user = optUser.orElseThrow(() -> new EntityStateException());
 
         if(petition.getSignedBy().contains(user))
             throw new EntityStateException();
@@ -91,6 +93,13 @@ public class PetitionService extends AbstractCrudService<Petition, Long> {
         } catch (EntityStateException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Petition> findAllPetitionsWithAuthorPetitionUsername(String username) throws EntityStateException {
+        Optional<User> optUser = userService.readById(username);
+        User user = optUser.orElseThrow(() -> new EntityStateException());
+
+        return petitionJpaRepository.findAllByAuthorPetition_Username(username);
     }
 
 }

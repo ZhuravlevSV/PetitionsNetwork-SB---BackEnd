@@ -66,4 +66,22 @@ public class PetitionController {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Petition not found"));
         petitionService.deleteById(id);
     }
+
+    @PostMapping("/petitions/{id}/sign/{idAuthor}")
+    public void signPetition(@PathVariable("id") Long pid, @PathVariable("idAuthor") String username){
+        try {
+            petitionService.signPetition(pid, username);
+        } catch (EntityStateException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User ID is not found");
+        }
+    }
+
+    @GetMapping("/petitions/author/{idAuthor}")
+    List<PetitionDto> getWithAuthorUsername(@PathVariable String idAuthor) {
+        try{
+            return petitionConverter.toDtos(petitionService.findAllPetitionsWithAuthorPetitionUsername(idAuthor));
+        } catch (EntityStateException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User ID is not found");
+        }
+    }
 }
