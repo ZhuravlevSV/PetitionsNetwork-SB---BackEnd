@@ -29,6 +29,10 @@ public class UserService extends AbstractCrudService<User, String>{
         Optional<User> optUser = readById(id);
         User user = optUser.orElseThrow();
 
+        // delete all signs
+        user.getSignedByMe().forEach(petition -> petition.getSignedBy().remove(user));
+
+
         // delete all petitions
         List<Long> petitionsIds = user.getMyPetitions()
                 .stream()

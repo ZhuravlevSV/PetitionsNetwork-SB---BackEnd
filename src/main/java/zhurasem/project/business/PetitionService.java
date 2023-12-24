@@ -56,7 +56,9 @@ public class PetitionService extends AbstractCrudService<Petition, Long> {
 
         Optional<User> optUser = userService.readById(petition.getAuthorPetition().getUsername());
 
-        User user = optUser.orElseThrow();
+        User user1 = optUser.orElseThrow();
+
+        petition.getSignedBy().forEach(user -> user.getSignedByMe().remove(petition));
 
         List<Long> commentsIds = petition.getComments()
                 .stream()
