@@ -76,7 +76,7 @@ public class PetitionController {
         }
     }
 
-    @GetMapping("/petitions/author/{idAuthor}")
+    @GetMapping("/petitions/{idAuthor}/myPetitions")
     List<PetitionDto> getWithAuthorUsername(@PathVariable String idAuthor) {
         try{
             return petitionConverter.toDtos(petitionService.findAllPetitionsWithAuthorPetitionUsername(idAuthor));
