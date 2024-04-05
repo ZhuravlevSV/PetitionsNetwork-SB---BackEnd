@@ -16,13 +16,6 @@ The user also has the opportunity to comment on petitions.
 - **Spring Boot**
 - **MySQL**
 
-## Download and Install
-
-1. Clone repository:
-
-   ```bash
-   git clone https://gitlab.fit.cvut.cz/zhurasem/petitions-sb-backend.git
-
 ## API Description
 
 ## Users
